@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Городская больница №7</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #f0f8ff 0%, #e6f3ff 100%);
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Навигация */
+        nav {
+            background: linear-gradient(135deg, #0066cc, #004c99);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            font-size: 16px;
+            padding: 8px 16px;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        
+        nav a:hover {
+            background-color: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+        
+        /* Поиск */
+        .search-container {
+            background-color: #fff;
+            padding: 30px 20px;
+            text-align: center;
+            border-bottom: 3px solid #0066cc;
+        }
+        
+        .search-box {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 15px 50px 15px 20px;
+            font-size: 16px;
+            border: 2px solid #0066cc;
+            border-radius: 30px;
+            outline: none;
+            transition: all 0.3s;
+        }
+        
+        .search-box input:focus {
+            box-shadow: 0 0 15px rgba(0,102,204,0.4);
+            border-color: #0099ff;
+        }
+        
+        .search-box button {
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #0066cc;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .search-box button:hover {
+            background-color: #004c99;
+        }
+        
+        #searchResults {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            display: none;
+            text-align: left;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        
+        .result-item {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .result-item:hover {
+            background-color: #f0f8ff;
+        }
+        
+        /* Заголовки */
+        h1 {
+            font-family: 'Arial Black', sans-serif;
+            color: #0066cc;
+            text-align: center;
+            font-size: 42px;
+            text-transform: uppercase;
+            margin: 30px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        h2 {
+            font-family: 'Verdana', sans-serif;
+            color: #cc0000;
+            text-align: center;
+            font-style: italic;
+            border-bottom: 3px solid #0066cc;
+            padding-bottom: 10px;
+            margin: 40px 0 20px 0;
+            font-size: 28px;
+        }
+        
+        h3 {
+            font-family: 'Times New Roman', serif;
+            color: #009900;
+            margin: 20px 0 10px 0;
+        }
+        
+        /* Герой секция */
+        .hero {
+            background: linear-gradient(135deg, #0066cc, #0099ff);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .hero h1 {
+            color: white;
+            margin: 0 0 20px 0;
+        }
+        
+        .hero p {
+            font-size: 20px;
+            max-width: 800px;
+            margin: 0 auto 30px auto;
+        }
+        
+        .hero-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background-color: white;
+            color: #0066cc;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 18px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        
+        .hero-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+        }
+        
+        /* Услуги - карточки */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .service-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            border-top: 5px solid #0066cc;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .service-icon {
+            font-size: 50px;
+            margin-bottom: 15px;
+        }
+        
+        .service-card h3 {
+            color: #0066cc;
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+        
+        .service-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        /* Врачи */
+        .doctors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .doctor-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+        
+        .doctor-card:hover {
+            transform: scale(1.05);
+        }
+        
+        .doctor-photo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0066cc, #0099ff);
+            margin: 0 auto 15px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            color: white;
+        }
+        
+        .doctor-card h4 {
+            color: #0066cc;
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        
+        .doctor-card .specialty {
+            color: #cc0000;
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+        
+        .doctor-card .experience {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        /* FAQ */
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .faq-item {
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .faq-question {
+            padding: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            color: #0066cc;
+            transition: background-color 0.3s;
+        }
+        
+        .faq-question:hover {
+            background-color: #f0f8ff;
+        }
+        
+        .faq-answer {
+            padding: 0 20px 20px 20px;
+            color: #666;
+            line-height: 1.6;
+            display: none;
+        }
+        
+        .faq-answer.active {
+            display: block;
+        }
+        
+        /* Контакты */
+        .contacts {
+            background: linear-gradient(135deg, #0066cc, #004c99);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            margin-top: 40px;
+        }
+        
+        .contacts h2 {
+            color: white;
+            border-bottom-color: white;
+        }
+        
+        .contacts p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        
+        .frame-container {
+            border: 3px dashed #0066cc;
+            padding: 10px;
+            margin: 20px auto;
+            max-width: 1200px;
+            border-radius: 10px;
+            background: white;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Навигация -->
+    <nav>
+        <ul>
+            <li><a href="index.html">🏠 Главная</a></li>
+            <li><a href="form.html">📝 Запись на приём</a></li>
+            <li><a href="vacancies.html">💼 Вакансии</a></li>
+            <li><a href="#contacts">📞 Контакты</a></li>
+        </ul>
+    </nav>
+
+    <!-- Герой секция -->
+    <div class="hero">
+        <h1>🏥 Городская больница №7</h1>
+        <p>Современное медицинское учреждение с 1985 года. Более 200 врачей различных специальностей готовы помочь вам.</p>
+        <a href="form.html" class="hero-button">📝 Записаться на приём</a>
+    </div>
+
+    <!-- Поиск -->
+    <div class="search-container">
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="🔍 Поиск по сайту: услуги, врачи, отделения...">
+            <button onclick="searchSite()">Найти</button>
+        </div>
+        <div id="searchResults"></div>
+    </div>
+
+    <h1>Наши услуги</h1>
+
+    <!-- Услуги -->
+    <div class="services-grid">
+        <div class="service-card">
+            <div class="service-icon">🩺</div>
+            <h3>Терапия</h3>
+            <p>Лечение заболеваний внутренних органов, профилактические осмотры, вакцинация</p>
+        </div>
+        
+        <div class="service-card">
+            <div class="service-icon">🔪</div>
+            <h3>Хирургия</h3>
+            <p>Плановые и экстренные операции, малоинвазивные вмешательства</p>
+        </div>
+        
+        <div class="service-card">
+            <div class="service-icon">❤️</div>
+            <h3>Кардиология</h3>
+            <p>Диагностика и лечение заболеваний сердца и сосудов, ЭКГ, УЗИ сердца</p>
+        </div>
+        
+        <div class="service-card">
+            <div class="service-icon"></div>
+            <h3>Неврология</h3>
+            <p>Лечение заболеваний нервной системы, головные боли, нарушения сна</p>
+        </div>
+        
+        <div class="service-card">
+            <div class="service-icon">🦴</div>
+            <h3>Травматология</h3>
+            <p>Лечение переломов, вывихов, спортивных травм, реабилитация</p>
+        </div>
+        
+        <div class="service-card">
+            <div class="service-icon"></div>
+            <h3>Педиатрия</h3>
+            <p>Медицинская помощь детям от 0 до 18 лет, профилактические осмотры</p>
+        </div>
+        
+        <div class="service-card">
+            <div class="service-icon">🔬</div>
+            <h3>Диагностика</h3>
+            <p>МРТ, КТ, УЗИ, рентген, лабораторные анализы</p>
+        </div>
+        
+        <div class="service-card">
+            <div class="service-icon"></div>
+            <h3>Реабилитация</h3>
+            <p>Восстановление после операций и травм, физиотерапия, ЛФК</p>
+        </div>
+    </div>
+
+    <h2>Наши врачи</h2>
+
+    <!-- Врачи -->
+    <div class="doctors-grid">
+        <div class="doctor-card">
+            <div class="doctor-photo">👨‍⚕️</div>
+            <h4>Иванов Сергей Петрович</h4>
+            <p class="specialty">Терапевт</p>
+            <p class="experience">Стаж: 25 лет</p>
+        </div>
+        
+        <div class="doctor-card">
+            <div class="doctor-photo">👩‍⚕️</div>
+            <h4>Смирнова Анна Владимировна</h4>
+            <p class="specialty">Кардиолог</p>
+            <p class="experience">Стаж: 18 лет</p>
+        </div>
+        
+        <div class="doctor-card">
+            <div class="doctor-photo">👨‍⚕️</div>
+            <h4>Петров Дмитрий Александрович</h4>
+            <p class="specialty">Хирург</p>
+            <p class="experience">Стаж: 22 года</p>
+        </div>
+        
+        <div class="doctor-card">
+            <div class="doctor-photo">👩‍️</div>
+            <h4>Козлова Мария Ивановна</h4>
+            <p class="specialty">Невролог</p>
+            <p class="experience">Стаж: 15 лет</p>
+        </div>
+        
+        <div class="doctor-card">
+            <div class="doctor-photo">👨⚕️</div>
+            <h4>Волков Алексей Николаевич</h4>
+            <p class="specialty">Травматолог</p>
+            <p class="experience">Стаж: 20 лет</p>
+        </div>
+        
+        <div class="doctor-card">
+            <div class="doctor-photo">👩‍⚕️</div>
+            <h4>Новикова Елена Сергеевна</h4>
+            <p class="specialty">Педиатр</p>
+            <p class="experience">Стаж: 12 лет</p>
+        </div>
+    </div>
+
+    <h2>Часто задаваемые вопросы</h2>
+
+    <!-- FAQ -->
+    <div class="faq-container">
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">❓ Как записаться на приём?</div>
+            <div class="faq-answer">
+                Вы можете записаться через наш сайт (кнопка "Записаться на приём"), по телефону регистратуры +7 (495) 123-45-67 или лично в рабочее время.
+            </div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">❓ Какие документы нужны для приёма?</div>
+            <div class="faq-answer">
+                Паспорт, полис ОМС, СНИЛС. Если есть направление от другого врача - возьмите его с собой.
+            </div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">❓ Сколько стоит приём?</div>
+            <div class="faq-answer">
+                Приём по полису ОМС бесплатный. Платные услуги уточняйте в регистратуре или на сайте.
+            </div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">❓ Как добраться до больницы?</div>
+            <div class="faq-answer">
+                Мы находимся по адресу: г. Москва, ул. Медицинская, д. 7. Ближайшее метро - "Медицинская" (5 минут пешком).
+            </div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">❓ Есть ли парковка?</div>
+            <div class="faq-answer">
+                Да, у нас есть бесплатная парковка для пациентов на 50 машиномест.
+            </div>
+        </div>
+    </div>
+
+    <!-- Карта -->
+    <div class="frame-container">
+        <h2>📍 Наше расположение</h2>
+        <iframe
+            src="https://maps.google.com/maps?q=Moscow&t=&z=13&ie=UTF8&iwloc=&output=embed"
+            width="100%"
+            height="300"
+            style="border:0;">
+        </iframe>
+    </div>
+
+    <!-- Контакты -->
+    <div class="contacts" id="contacts">
+        <h2>📞 Контакты</h2>
+        <p><b>Адрес:</b> г. Москва, ул. Медицинская, д. 7</p>
+        <p><b>Телефон регистратуры:</b> +7 (495) 123-45-67</p>
+        <p><b>Скорая помощь:</b> 103</p>
+        <p><b>Email:</b> info@hospital7.ru</p>
+        <p><b>Режим работы:</b> Пн-Пт: 08:00-20:00, Сб: 09:00-15:00</p>
+    </div>
+
+    <script>
+        // Поиск по сайту
+        const searchData = [
+            { title: "Терапия", desc: "Лечение заболеваний внутренних органов", link: "#services" },
+            { title: "Хирургия", desc: "Плановые и экстренные операции", link: "#services" },
+            { title: "Кардиология", desc: "Диагностика и лечение заболеваний сердца", link: "#services" },
+            { title: "Неврология", desc: "Лечение заболеваний нервной системы", link: "#services" },
+            { title: "Травматология", desc: "Лечение переломов и вывихов", link: "#services" },
+            { title: "Педиатрия", desc: "Медицинская помощь детям", link: "#services" },
+            { title: "Диагностика", desc: "МРТ, КТ, УЗИ, анализы", link: "#services" },
+            { title: "Реабилитация", desc: "Восстановление после операций", link: "#services" },
+            { title: "Иванов Сергей Петрович", desc: "Терапевт, стаж 25 лет", link: "#doctors" },
+            { title: "Смирнова Анна Владимировна", desc: "Кардиолог, стаж 18 лет", link: "#doctors" },
+            { title: "Петров Дмитрий Александрович", desc: "Хирург, стаж 22 года", link: "#doctors" },
+            { title: "Запись на приём", desc: "Заполните анкету для записи", link: "form.html" },
+            { title: "Вакансии", desc: "Работа в больнице №7", link: "vacancies.html" }
+        ];
+
+        function searchSite() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const resultsDiv = document.getElementById('searchResults');
+            
+            if (query.length < 2) {
+                resultsDiv.style.display = 'none';
+                return;
+            }
+            
+            const results = searchData.filter(item => 
+                item.title.toLowerCase().includes(query) || 
+                item.desc.toLowerCase().includes(query)
+            );
+            
+            if (results.length > 0) {
+                resultsDiv.innerHTML = results.map(item => 
+                    `<div class="result-item" onclick="window.location.href='${item.link}'">
+                        <b>${item.title}</b><br>
+                        <small>${item.desc}</small>
+                    </div>`
+                ).join('');
+                resultsDiv.style.display = 'block';
+            } else {
+                resultsDiv.innerHTML = '<p style="text-align: center; color: #999;">Ничего не найдено</p>';
+                resultsDiv.style.display = 'block';
+            }
+        }
+
+        // FAQ аккордеон
+        function toggleFaq(element) {
+            const answer = element.nextElementSibling;
+            answer.classList.toggle('active');
+        }
+
+        // Поиск при нажатии Enter
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchSite();
+            }
+        });
+    </script>
+
+</body>
+</html>

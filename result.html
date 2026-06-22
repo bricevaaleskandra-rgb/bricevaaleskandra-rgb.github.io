@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Заявка отправлена - Больница №7</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #e8f5e9, #ffffff);
+            text-align: center;
+            padding: 50px 20px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .success-box {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border-top: 10px solid #00aa00;
+        }
+        
+        h1 {
+            color: #00aa00;
+            font-size: 48px;
+            margin: 20px 0;
+        }
+        
+        .icon {
+            font-size: 100px;
+            animation: bounce 1s ease infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        p {
+            font-size: 18px;
+            line-height: 1.8;
+            color: #333;
+            margin: 15px 0;
+        }
+        
+        .highlight {
+            color: #0066cc;
+            font-weight: bold;
+            font-size: 24px;
+            background-color: #f0f8ff;
+            padding: 10px 20px;
+            border-radius: 10px;
+            display: inline-block;
+            margin: 15px 0;
+        }
+        
+        .warning {
+            color: #cc0000;
+            font-style: italic;
+            background-color: #fff3cd;
+            padding: 15px;
+            border-left: 5px solid #cc0000;
+            text-align: left;
+            margin: 25px 0;
+            border-radius: 5px;
+        }
+        
+        .buttons {
+            margin-top: 30px;
+        }
+        
+        a.button {
+            display: inline-block;
+            margin: 10px;
+            padding: 15px 30px;
+            background-color: #0066cc;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        a.button:hover {
+            background-color: #004c99;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        
+        a.button.green {
+            background-color: #00aa00;
+        }
+        
+        a.button.green:hover {
+            background-color: #008800;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="success-box">
+        <div class="icon">✅</div>
+        <h1>Спасибо!</h1>
+        <p>Ваша заявка <b>успешно отправлена</b>.</p>
+        <p>Номер вашей заявки:</p>
+        <div class="highlight" id="ticketNumber">#2026-06-22-001</div>
+        
+        <p>
+            В ближайшее время с вами свяжется<br>
+            <i>оператор регистратуры</i> для подтверждения записи.
+        </p>
+
+        <div class="warning">
+            ⚠ <b>Важно!</b> Если в течение 24 часов вам не позвонили,
+            пожалуйста, свяжитесь с нами по телефону:
+            <b>+7 (495) 123-45-67</b>
+        </div>
+
+        <p style="text-align: right; font-style: italic; color: #666;">
+            С уважением,<br>
+            администрация больницы №7
+        </p>
+
+        <div class="buttons">
+            <a href="index.html" class="button">🏠 На главную</a>
+            <a href="form.html" class="button green">📝 Новая заявка</a>
+        </div>
+    </div>
+
+    <script>
+        // Генерация случайного номера заявки
+        window.onload = function() {
+            var date = new Date();
+            var ticketNum = '#' + date.getFullYear() + '-' + 
+                           String(date.getMonth()+1).padStart(2,'0') + '-' + 
+                           String(date.getDate()).padStart(2,'0') + '-' + 
+                           String(Math.floor(Math.random() * 999)).padStart(3,'0');
+            document.getElementById('ticketNumber').textContent = ticketNum;
+            
+            setTimeout(function() {
+                alert('🔔 Напоминание: не забудьте взять с собой паспорт и полис ОМС!');
+            }, 1500);
+        };
+    </script>
+
+</body>
+</html>

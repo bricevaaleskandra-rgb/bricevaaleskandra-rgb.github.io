@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Запись на приём - Больница №7</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #e0f7fa, #ffffff);
+            margin: 0;
+            padding: 0;
+        }
+        
+        nav {
+            background: linear-gradient(135deg, #0066cc, #004c99);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            font-size: 16px;
+            padding: 8px 16px;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        
+        nav a:hover {
+            background-color: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+        
+        h1 {
+            font-family: 'Arial Black', sans-serif;
+            color: #0066cc;
+            text-align: center;
+            font-size: 36px;
+            margin: 30px 0;
+        }
+        
+        h2 {
+            color: #cc0000;
+            font-style: italic;
+            text-align: left;
+            margin: 20px 0 15px 0;
+        }
+        
+        .form-container {
+            max-width: 700px;
+            margin: 0 auto 40px auto;
+            background-color: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        label {
+            display: block;
+            margin-top: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        input[type="text"], input[type="date"], input[type="tel"], input[type="email"], select, textarea {
+            width: 100%;
+            padding: 12px;
+            margin-top: 8px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #0066cc;
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .radio-group, .checkbox-group {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+        
+        .radio-group label, .checkbox-group label {
+            display: inline;
+            font-weight: normal;
+            margin-right: 20px;
+        }
+        
+        button {
+            margin-top: 25px;
+            padding: 15px 35px;
+            background-color: #0066cc;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        button:hover {
+            background-color: #004c99;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 30px;
+            color: #0066cc;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        
+        .required { color: red; }
+        
+        .note {
+            font-size: 12px;
+            color: #666;
+            font-style: italic;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #fffacd;
+            border-radius: 8px;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        @media (max-width: 600px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">🏠 Главная</a></li>
+            <li><a href="form.html">📝 Запись на приём</a></li>
+            <li><a href="vacancies.html">💼 Вакансии</a></li>
+            <li><a href="index.html#contacts">📞 Контакты</a></li>
+        </ul>
+    </nav>
+
+    <h1>📋 Запись на приём</h1>
+
+    <div class="form-container">
+        <form action="result.html" method="get" onsubmit="return validateForm()">
+
+            <h2>👤 Личные данные</h2>
+
+            <label>ФИО <span class="required">*</span></label>
+            <input type="text" name="fio" id="fio" placeholder="Иванов Иван Иванович" required>
+
+            <div class="form-row">
+                <div>
+                    <label>Дата рождения <span class="required">*</span></label>
+                    <input type="date" name="birthday" required>
+                </div>
+                <div>
+                    <label>Пол <span class="required">*</span></label>
+                    <select name="gender" required>
+                        <option value="">-- Выберите --</option>
+                        <option value="male">Мужской</option>
+                        <option value="female">Женский</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div>
+                    <label>Телефон <span class="required">*</span></label>
+                    <input type="tel" name="phone" placeholder="+7 (___) ___-__-__" required>
+                </div>
+                <div>
+                    <label>Email</label>
+                    <input type="email" name="email" placeholder="example@mail.ru">
+                </div>
+            </div>
+
+            <h2>🏥 Информация о приёме</h2>
+
+            <label>Выберите отделение <span class="required">*</span></label>
+            <select name="department" required>
+                <option value="">-- Выберите отделение --</option>
+                <option value="therapy">Терапевтическое</option>
+                <option value="surgery">Хирургическое</option>
+                <option value="cardiology">Кардиологическое</option>
+                <option value="neurology">Неврологическое</option>
+                <option value="traumatology">Травматологическое</option>
+                <option value="pediatrics">Педиатрическое</option>
+            </select>
+
+            <label>Выберите врача</label>
+            <select name="doctor">
+                <option value="">-- Любой доступный --</option>
+                <option value="ivanov">Иванов Сергей Петрович (Терапевт)</option>
+                <option value="smirnova">Смирнова Анна Владимировна (Кардиолог)</option>
+                <option value="petrov">Петров Дмитрий Александрович (Хирург)</option>
+                <option value="kozlova">Козлова Мария Ивановна (Невролог)</option>
+            </select>
+
+            <label>Желаемая дата приёма <span class="required">*</span></label>
+            <input type="date" name="appointment_date" required>
+
+            <label>Дополнительные услуги</label>
+            <div class="checkbox-group">
+                <label><input type="checkbox" name="services" value="ecg"> ЭКГ</label>
+                <label><input type="checkbox" name="services" value="ultrasound"> УЗИ</label>
+                <label><input type="checkbox" name="services" value="mri"> МРТ</label>
+                <label><input type="checkbox" name="services" value="blood"> Анализ крови</label>
+            </div>
+
+            <label>Жалобы и симптомы</label>
+            <textarea name="complaints" placeholder="Опишите ваши симптомы, жалобы, причину обращения..."></textarea>
+
+            <div class="note">
+                <b>⚠️ Важно:</b> Поля, отмеченные <span class="required">*</span>, обязательны для заполнения. 
+                С собой необходимо взять паспорт, полис ОМС и СНИЛС. 
+                Данные защищены врачебной тайной.
+            </div>
+
+            <div style="text-align: center;">
+                <button type="submit">✅ Записаться на приём</button>
+                <button type="reset" style="background-color: #999; margin-left: 10px;">🔄 Очистить</button>
+            </div>
+
+        </form>
+
+        <a href="index.html" class="back-link">⬅ Вернуться на главную</a>
+    </div>
+
+    <script>
+        function validateForm() {
+            var fio = document.getElementById('fio').value;
+            if (fio.length < 5) {
+                alert(' Ошибка: ФИО должно содержать минимум 5 символов!');
+                return false;
+            }
+            alert('✅ Анкета успешно заполнена! Переход на страницу подтверждения...');
+            return true;
+        }
+    </script>
+
+</body>
+</html>
